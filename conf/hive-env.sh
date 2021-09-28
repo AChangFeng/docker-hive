@@ -52,3 +52,4 @@
 
 # Folder containing extra ibraries required for hive compilation/execution can be controlled by:
 # export HIVE_AUX_JARS_PATH=
+export HADOOP_OPTS="$HADOOP_OPTS -Dfile.encoding=UTF-8"

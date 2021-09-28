@@ -1,4 +1,4 @@
-FROM bde2020/hadoop-base:2.0.0-hadoop2.7.4-java8
+FROM bde2020/hadoop-base:2.0.0-hadoop3.1.2-java8
 
 MAINTAINER Yiannis Mouchakis <gmouchakis@iit.demokritos.gr>
 MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
@@ -17,15 +17,17 @@ ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 WORKDIR /opt
 
 #Install Hive and PostgreSQL JDBC
-RUN apt-get update && apt-get install -y wget procps && \
-	wget https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz && \
-	tar -xzvf apache-hive-$HIVE_VERSION-bin.tar.gz && \
-	mv apache-hive-$HIVE_VERSION-bin hive && \
-	wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -O $HIVE_HOME/lib/postgresql-jdbc.jar && \
-	rm apache-hive-$HIVE_VERSION-bin.tar.gz && \
-	apt-get --purge remove -y wget && \
-	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
+COPY sources.list /etc/apt/
+RUN apt-get update && apt-get install -y --allow-unauthenticated wget procps && \
+        wget https://mirrors.tuna.tsinghua.edu.cn/apache/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz && \
+        tar -xzvf apache-hive-$HIVE_VERSION-bin.tar.gz && \
+        mv apache-hive-$HIVE_VERSION-bin hive && \
+        wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -O $HIVE_HOME/lib/postgresql-jdbc.jar && \
+        rm apache-hive-$HIVE_VERSION-bin.tar.gz && \
+        apt-get --purge remove -y wget && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* && \
+        echo 'export HADOOP_CLIENT_OPTS="-Xmx1024m"' >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 
 #Spark should be compiled with Hive to be able to use it

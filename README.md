@@ -2,14 +2,20 @@
 
 # docker-hive
 
-This is a docker container for Apache Hive 2.3.2. It is based on https://github.com/big-data-europe/docker-hadoop so check there for Hadoop configurations.
+This is a docker container for Apache Hive 2.3.2 and 3.1.2. It is based on https://github.com/big-data-europe/docker-hadoop so check there for Hadoop configurations.
 This deploys Hive and starts a hiveserver2 on port 10000.
 Metastore is running with a connection to postgresql database.
 The hive configuration is performed with HIVE_SITE_CONF_ variables (see hadoop-hive.env for an example).
 
-To run Hive with postgresql metastore:
+To run Hive 2.3.2 with postgresql metastore:
 ```
     docker-compose up -d
+```
+
+To run Hive 3.1.2 with postgresql metastore:
+```
+    docker build -t hive:v3.1.2 --build-arg HIVE_VERSION=3.1.2 .
+    docker-compose -f docker-compose-v3.yml up -d
 ```
 
 To deploy in Docker Swarm:
