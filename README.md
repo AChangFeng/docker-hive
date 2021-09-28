@@ -2,11 +2,12 @@
 
 # docker-hive
 
+This repository is base on https://github.com/big-data-europe/docker-hive, add Chinese support and Hive 3.1.2 support.
+
 This is a docker container for Apache Hive 2.3.2 and 3.1.2. It is based on https://github.com/big-data-europe/docker-hadoop so check there for Hadoop configurations.
 This deploys Hive and starts a hiveserver2 on port 10000.
 Metastore is running with a connection to postgresql database.
 The hive configuration is performed with HIVE_SITE_CONF_ variables (see hadoop-hive.env for an example).
-This repository is configured to support Chinese and Hive 3.1.2.
 
 To run Hive 2.3.2 with postgresql metastore:
 ```
