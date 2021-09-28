@@ -6,6 +6,7 @@ This is a docker container for Apache Hive 2.3.2 and 3.1.2. It is based on https
 This deploys Hive and starts a hiveserver2 on port 10000.
 Metastore is running with a connection to postgresql database.
 The hive configuration is performed with HIVE_SITE_CONF_ variables (see hadoop-hive.env for an example).
+This repository is configured to support Chinese and Hive 3.1.2.
 
 To run Hive 2.3.2 with postgresql metastore:
 ```
@@ -48,6 +49,10 @@ Then query it from PrestoDB. You can get [presto.jar](https://prestosql.io/docs/
   $ ./presto.jar --server localhost:8080 --catalog hive --schema default
   presto> select * from pokes;
 ```
+
+## Work with Flink Hive Connector
+- Copy core-site.xml hdfs-site.xml hive-site.xml from container docker-hive_hive-server_1.
+- Add ```${host_ip}  hive-metastore hive-metastore-postgresql namenode ${docker-hive_datanode_1_container_id}``` /etc/hosts to Flink cluster.
 
 ## Contributors
 * Ivan Ermilov [@earthquakesan](https://github.com/earthquakesan) (maintainer)
